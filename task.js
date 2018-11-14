@@ -16,7 +16,7 @@ function getEncodingAndCheck () {
   return encoding
 }
 
-new Promise((resolve, reject) => {
+let promise = new Promise((resolve, reject) => {
   setTimeout(() => {
     let text
     fs.readFile(path, encoding, function (error, content) {
@@ -41,7 +41,10 @@ new Promise((resolve, reject) => {
   }
   return newResult
 }).then(result => {
-  fs.writeFile('log.txt', result.toString(), encoding, () => { console.log('-----\nFile log.txt was created') })
+  fs.writeFile('log.txt', result.join('\r\n'), encoding, () => { console.log('-----\nFile log.txt was created') })
+  return result
 }).catch(error => {
   console.log(error.toString())
 })
+
+promise.then()
